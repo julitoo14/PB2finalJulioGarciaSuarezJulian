@@ -10,12 +10,12 @@ public class CentroVacunacion {
 	public CentroVacunacion(String nombre) {
 		this.nombre = nombre;
 		this.ciudadanos= new HashSet<>();
-		this.ciudadanosVacunados=new TreeSet<>();
+		this.ciudadanosVacunados=new HashSet<>();
 		
 	}
 	
-	public Boolean registrarCiudadano(String nombre, Integer dni) {
-		Ciudadano nuevo = new Ciudadano(nombre, dni);
+	public Boolean registrarCiudadano(Ciudadano ciudadano) {
+		Ciudadano nuevo = ciudadano;
 		return ciudadanos.add(nuevo);
 	}
 	
@@ -28,18 +28,34 @@ public class CentroVacunacion {
 		return null;
 	}
 	
-	public Boolean aplicarPrimeraDosisCovid(Integer dni, VacunaCovid dosis1) {
-		return buscarCiudadano(dni).aplicarPrimeraDosisCovid(dosis1);
+	public Boolean verificarSiSeEncuentraVacunado(Ciudadano ciudadano) {
+		if (ciudadanosVacunados.contains(ciudadano)) {
+			return true;
+		}
+		return false;
+		
 	}
 	
-	public Boolean aplicarSegundaDosisCovid(Integer dni, VacunaCovid dosis2, Vacuna covid) throws NoCovidVaccineException {
-		if (buscarCiudadano(dni).aplicarSegundaDosisCovid(dosis2, covid)) {
-			ciudadanosVacunados.add(buscarCiudadano(dni));
+	public Boolean aplicarPrimeraDosisCovid(Ciudadano ciudadano) {
+		return ciudadano.aplicarDosis1();
+	}
+	
+	public Boolean aplicarSegundaDosisCovid(Ciudadano ciudadano, Vacuna covid) throws NoCovidVaccineException {
+		if (ciudadano.aplicarDosis2(covid)) {
+			ciudadanosVacunados.add(ciudadano);
 			return Boolean.TRUE;
 		}
 		
 		throw new NoCovidVaccineException();
 		
+	}
+	
+	public Boolean aplicarVacuna(Ciudadano ciudadano,Vacuna vacuna) throws NoMoreVaccineException {
+		if (ciudadano.aplicarVacuna(vacuna)) {
+			ciudadano.aplicarVacuna(vacuna);
+			return ciudadanosVacunados.add(ciudadano);
+		}
+		throw new NoMoreVaccineException();
 	}
 	
 	
