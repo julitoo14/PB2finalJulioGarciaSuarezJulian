@@ -6,7 +6,7 @@ public class Ciudadano implements dosis1, dosis2, Comparable<Ciudadano> {
 	private Integer dni;
 	private Set<Vacuna> vacunasAplicadas;
 	private Boolean dosis1, dosis2;
-	
+
 	public Ciudadano(String nombre, Integer dni) {
 		this.nombre=nombre;
 		this.dni=dni;
@@ -14,6 +14,8 @@ public class Ciudadano implements dosis1, dosis2, Comparable<Ciudadano> {
 		this.dosis1=Boolean.FALSE;
 		this.dosis2=Boolean.FALSE;
 	}
+	
+	
 	
 	public Integer getCantidadVacunas() {
 		return vacunasAplicadas.size();
@@ -104,6 +106,10 @@ public class Ciudadano implements dosis1, dosis2, Comparable<Ciudadano> {
 		// TODO Auto-generated method stub
 		return o.nombre.compareTo(nombre);
 	}
+
+
+
+
 	
 	
 

@@ -51,7 +51,6 @@ public class VacunarteTest {
 		Vacuna hepatitisB = new Vacuna("Hepatitis B");
 		Vacuna rubeola = new Vacuna("Rubeola");
 		Ciudadano ciudadano = new Ciudadano("Julian", 41428826);
-		Integer ve= 2;
 		vacunarte.registrarCiudadano(ciudadano);
 		vacunarte.aplicarVacuna(ciudadano, hepatitisA);
 		vacunarte.aplicarVacuna(ciudadano, hepatitisB);
@@ -70,7 +69,7 @@ public class VacunarteTest {
 		Ciudadano ciudadano2 = new Ciudadano("Fernando", 11428826);
 		vacunarte.registrarCiudadano(ciudadano2);
 		Ciudadano ciudadano3 = new Ciudadano("Alma", 22430021);
-		vacunarte.registrarCiudadano(ciudadano2);
+		vacunarte.registrarCiudadano(ciudadano3);
 		vacunarte.aplicarVacuna(ciudadano1, rubeola);
 		vacunarte.aplicarVacuna(ciudadano2, hepatitisB);
 		vacunarte.aplicarVacuna(ciudadano3, hepatitisA);
@@ -84,24 +83,6 @@ public class VacunarteTest {
 	}
 	
 	
-	@Test 
-	public void queUnPacienteNoPuedaAplicarseDosVecesLaMismaVacuna() throws NoCovidVaccineException, NoMoreVaccineException {
-		CentroVacunacion vacunarte = new CentroVacunacion("VacunArte");
-		Vacuna hepatitisA = new Vacuna("Hepatitis A");
-		Vacuna hepatitisB = new Vacuna("Hepatitis B");
-		Vacuna rubeola = new Vacuna("Rubeola");
-		Ciudadano ciudadano1 = new Ciudadano("Julian", 41428826);
-		vacunarte.registrarCiudadano(ciudadano1);
-		Integer valorEsperado = 1;
-		Integer valorObtenido = ciudadano1.getCantidadVacunas();
-		
-		
-		vacunarte.aplicarVacuna(ciudadano1, rubeola);
-		vacunarte.aplicarVacuna(ciudadano1, rubeola);
-		assertEquals(valorEsperado, valorObtenido);
-
-		
-	}
 	
 	
 	
