@@ -92,8 +92,13 @@ public class VacunarteTest {
 		Vacuna rubeola = new Vacuna("Rubeola");
 		Ciudadano ciudadano1 = new Ciudadano("Julian", 41428826);
 		vacunarte.registrarCiudadano(ciudadano1);
+		Integer valorEsperado = 1;
+		Integer valorObtenido = ciudadano1.getCantidadVacunas();
 		
-		assertTrue(vacunarte.aplicarVacuna(ciudadano1, rubeola));
+		
+		vacunarte.aplicarVacuna(ciudadano1, rubeola);
+		vacunarte.aplicarVacuna(ciudadano1, rubeola);
+		assertEquals(valorEsperado, valorObtenido);
 
 		
 	}
