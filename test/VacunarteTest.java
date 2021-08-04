@@ -1,5 +1,9 @@
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import org.junit.Test;
 
 public class VacunarteTest {
@@ -39,19 +43,58 @@ public class VacunarteTest {
 		
 	}
 	
-	@Test 
-	public void queUnPacienteSoloPuedaRecibirDosVacunas() throws NoCovidVaccineException, NoMoreVaccineException {
+	@Test (expected = NoMoreVaccineException.class)
+	public void queUnPacienteSoloPuedaRecibirDosVacunas() throws NoMoreVaccineException {
 		CentroVacunacion vacunarte = new CentroVacunacion("VacunArte");
 		Vacuna covid = new Vacuna("Covid-19");
 		Vacuna hepatitisA = new Vacuna("Hepatitis A");
 		Vacuna hepatitisB = new Vacuna("Hepatitis B");
 		Vacuna rubeola = new Vacuna("Rubeola");
 		Ciudadano ciudadano = new Ciudadano("Julian", 41428826);
+		Integer ve= 2;
 		vacunarte.registrarCiudadano(ciudadano);
 		vacunarte.aplicarVacuna(ciudadano, hepatitisA);
-		assertTrue(vacunarte.aplicarVacuna(ciudadano, hepatitisB));
-	
+		vacunarte.aplicarVacuna(ciudadano, hepatitisB);
+		vacunarte.aplicarVacuna(ciudadano, rubeola);
 		
+	}
+	
+	@Test
+	public void queSeMuestrenLosPacientesVacunadosOrdenadosPorDniYXNombreDescendente() throws NoCovidVaccineException, NoMoreVaccineException {
+		CentroVacunacion vacunarte = new CentroVacunacion("VacunArte");
+		Vacuna hepatitisA = new Vacuna("Hepatitis A");
+		Vacuna hepatitisB = new Vacuna("Hepatitis B");
+		Vacuna rubeola = new Vacuna("Rubeola");
+		Ciudadano ciudadano1 = new Ciudadano("Julian", 41428826);
+		vacunarte.registrarCiudadano(ciudadano1);
+		Ciudadano ciudadano2 = new Ciudadano("Fernando", 11428826);
+		vacunarte.registrarCiudadano(ciudadano2);
+		Ciudadano ciudadano3 = new Ciudadano("Alma", 22430021);
+		vacunarte.registrarCiudadano(ciudadano2);
+		vacunarte.aplicarVacuna(ciudadano1, rubeola);
+		vacunarte.aplicarVacuna(ciudadano2, hepatitisB);
+		vacunarte.aplicarVacuna(ciudadano3, hepatitisA);
+		
+		List<Ciudadano> listaOrdenadaVacunados = new ArrayList<>();
+		listaOrdenadaVacunados.addAll(vacunarte.obtenerListaPacientesVacunadosOrdenadosXDniYNombre());
+		
+		assertEquals(listaOrdenadaVacunados.get(0), ciudadano2);
+		assertEquals(listaOrdenadaVacunados.get(1), ciudadano3);
+		assertEquals(listaOrdenadaVacunados.get(2), ciudadano1);
+	}
+	
+	
+	@Test 
+	public void queUnPacienteNoPuedaAplicarseDosVecesLaMismaVacuna() throws NoCovidVaccineException, NoMoreVaccineException {
+		CentroVacunacion vacunarte = new CentroVacunacion("VacunArte");
+		Vacuna hepatitisA = new Vacuna("Hepatitis A");
+		Vacuna hepatitisB = new Vacuna("Hepatitis B");
+		Vacuna rubeola = new Vacuna("Rubeola");
+		Ciudadano ciudadano1 = new Ciudadano("Julian", 41428826);
+		vacunarte.registrarCiudadano(ciudadano1);
+		
+		assertTrue(vacunarte.aplicarVacuna(ciudadano1, rubeola));
+
 		
 	}
 	

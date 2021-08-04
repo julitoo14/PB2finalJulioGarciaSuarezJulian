@@ -1,3 +1,5 @@
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
@@ -10,7 +12,7 @@ public class CentroVacunacion {
 	public CentroVacunacion(String nombre) {
 		this.nombre = nombre;
 		this.ciudadanos= new HashSet<>();
-		this.ciudadanosVacunados=new HashSet<>();
+		this.ciudadanosVacunados=new TreeSet<>();
 		
 	}
 	
@@ -56,6 +58,23 @@ public class CentroVacunacion {
 			return ciudadanosVacunados.add(ciudadano);
 		}
 		throw new NoMoreVaccineException();
+	}
+	
+	public Collection<Ciudadano> obtenerListaPacientesVacunadosOrdenadosXDniYNombre(){
+		Comparator<Ciudadano> ordenNuevo = new Comparator<Ciudadano>() {
+
+			@Override
+			public int compare(Ciudadano o1, Ciudadano o2) {
+				if (o1.getDni().compareTo(o2.getDni())!=0) {
+					return o1.getDni().compareTo(o2.getDni());
+				}
+				return o2.getNombre().compareTo(o1.getNombre());
+			}
+		};
+		
+		TreeSet<Ciudadano> vacunadosOrdenadosXDniYNombre = new TreeSet<>(ordenNuevo);
+		vacunadosOrdenadosXDniYNombre.addAll(ciudadanosVacunados);
+		return vacunadosOrdenadosXDniYNombre;
 	}
 	
 	

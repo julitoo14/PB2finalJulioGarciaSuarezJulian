@@ -1,7 +1,7 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class Ciudadano implements dosis1, dosis2 {
+public class Ciudadano implements dosis1, dosis2, Comparable<Ciudadano> {
 	private String nombre;
 	private Integer dni;
 	private Set<Vacuna> vacunasAplicadas;
@@ -95,7 +95,14 @@ public class Ciudadano implements dosis1, dosis2 {
 		if (vacunasAplicadas.size()<=2) {
 			return vacunasAplicadas.add(vacuna);
 		}
+		
 		throw new NoMoreVaccineException();
+	}
+
+	@Override
+	public int compareTo(Ciudadano o) {
+		// TODO Auto-generated method stub
+		return o.nombre.compareTo(nombre);
 	}
 	
 	
